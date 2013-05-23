@@ -398,22 +398,22 @@ class _GcodeRecipe(Recipe):
         dualstrusion = False
         tasks = []
 
-        with tempfile.NamedTemporaryFile(suffix='.gcode') as outputfp:
-            outputpath = outputfp.name
-        profile = self._job.machine.get_profile()
-        add_start_end = not self._job.has_start_end
-        add_start_end_task = self._add_start_end_task(
-            profile, self._job.slicer_settings, self._job.material_name,
-            add_start_end, dualstrusion, self._job.input_file, outputpath)
-        tasks.append(add_start_end_task)
+        #with tempfile.NamedTemporaryFile(suffix='.gcode') as outputfp:
+        #    outputpath = outputfp.name
+        #profile = self._job.machine.get_profile()
+        #add_start_end = not self._job.has_start_end
+        #add_start_end_task = self._add_start_end_task(
+        #    profile, self._job.slicer_settings, self._job.material_name,
+        #    add_start_end, dualstrusion, self._job.input_file, outputpath)
+        #tasks.append(add_start_end_task)
 
         #verify
-        profile = self._job.machine.get_profile()
-        verifytask = self.verifygcodetask(outputpath, profile, self._job.slicer_settings, self._job.material_name, dualstrusion)
-        tasks.append(verifytask)
+        #profile = self._job.machine.get_profile()
+        #verifytask = self.verifygcodetask(outputpath, profile, self._job.slicer_settings, self._job.material_name, dualstrusion)
+        #tasks.append(verifytask)
 
         # Print
-        printtask = self._printtask(self._job.machine, outputpath, False)
+        printtask = self._printtask(self._job.machine, self._gcodepath, False)
         tasks.append(printtask)
 
         process = conveyor.process.tasksequence(self._job, tasks)
